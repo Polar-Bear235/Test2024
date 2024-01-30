@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swipe Gesture Detection</title>
+  <style>
+    body {
+      overflow: hidden;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  // Initialize variables to store touch start coordinates
+  let startX = 0;
+  let startY = 0;
+
+  // Set the minimum distance required to recognize a swipe
+  const minDistance = 50;
+
+  // Add event listeners for touch events
+  document.addEventListener('touchstart', handleTouchStart, false);
+  document.addEventListener('touchmove', handleTouchMove, false);
+  document.addEventListener('touchend', handleTouchEnd, false);
+
+  function handleTouchStart(event) {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+  }
+
+  function handleTouchMove(event) {
+    event.preventDefault(); // Prevent scrolling while swiping
+  }
+
+  function handleTouchEnd(event) {
+    const endX = event.changedTouches[0].clientX;
+    const endY = event.changedTouches[0].clientY;
+
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
+
+    // Determine the direction based on the difference in coordinates
+    if (Math.abs(deltaX) > minDistance || Math.abs(deltaY) > minDistance) {
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // Horizontal swipe
+        if (deltaX > 0) {
+          console.log('Swipe Right');
+        } else {
+          console.log('Swipe Left');
+        }
+      } else {
+        // Vertical swipe
+        if (deltaY > 0) {
+          console.log('Swipe Down');
+        } else {
+          console.log('Swipe Up');
+        }
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
